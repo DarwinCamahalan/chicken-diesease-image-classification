@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:tflite/tflite.dart';
 import 'package:image_picker/image_picker.dart';
 
-
 void main() {
   runApp(const MyApp());
 }
@@ -14,6 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false, // Remove debug banner
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(
@@ -91,50 +91,66 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-@override
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(
-      backgroundColor: Theme.of(context).colorScheme.primary,
-      title: Text(widget.title),
-    ),
-    body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          if (_image != null) Image.file(_image!),
-          if (_output != null) ...[
-            SizedBox(height: 16),
-            Text(
-              'Classification Result:',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 8),
-            Text(
-              _output![0]['label'],
-              style: TextStyle(fontSize: 16),
-            ),
+  @override
+  Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final imageHeight = screenHeight * 0.7; // Display image with 80% of screen height
+
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            if (_image != null)
+              Container(
+                height: imageHeight,
+                child: Image.file(_image!),
+              ),
+            if (_output != null) ...[
+              SizedBox(height: 16),
+              Text(
+                'Classification Result:',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8),
+              Text(
+                getFormattedLabel(_output![0]['label']),
+                style: TextStyle(fontSize: 16),
+              ),
+              SizedBox(height: 8),
+              Text(
+                '${(_output![0]['confidence'] * 100).toStringAsFixed(2)}%',
+                style: TextStyle(fontSize: 16),
+              ),
+            ],
           ],
+        ),
+      ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: _pickImage,
+            tooltip: 'Pick Image',
+            child: Icon(Icons.photo_library),
+          ),
+          SizedBox(height: 16),
+          FloatingActionButton(
+            onPressed: _captureImage,
+            tooltip: 'Capture Image',
+            child: Icon(Icons.camera_alt),
+          ),
         ],
       ),
-    ),
-    floatingActionButton: Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        FloatingActionButton(
-          onPressed: _pickImage,
-          tooltip: 'Pick Image',
-          child: Icon(Icons.photo_library),
-        ),
-        SizedBox(height: 16),
-        FloatingActionButton(
-          onPressed: _captureImage,
-          tooltip: 'Capture Image',
-          child: Icon(Icons.camera_alt),
-        ),
-      ],
-    ),
-  );
-}
+    );
+  }
 
+  String getFormattedLabel(String label) {
+    final trimmedLabel = label.split(' ').sublist(1).join(' ');
+    return trimmedLabel;
+  }
 }
