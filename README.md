@@ -1,17 +1,7 @@
-# flutter_app
+# A Flutter Mobile App that can Classify Multiple Chicken Disease
 
-A new Flutter project.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# chicken-disease
+### Mobile Application Preview
+![Screenshot_1686577507](https://github.com/DarwinCamahalan/chicken-diesease-image-classification-flutter/assets/120079195/89a380ed-6dd9-47bd-a58b-1934c029e640)
+![Screenshot_1686577572](https://github.com/DarwinCamahalan/chicken-diesease-image-classification-flutter/assets/120079195/d1e47534-f38a-4145-a0bd-2c3bb2cad89b)
+![Screenshot_1686577690](https://github.com/DarwinCamahalan/chicken-diesease-image-classification-flutter/assets/120079195/bfe24584-cb66-4c83-80f0-38ae419329d0)
